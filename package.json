@@ -1,0 +1,55 @@
+{
+  "name": "web3-payment",
+  "version": "0.0.0",
+  "private": true,
+  "main": "dist/electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check \"build-only {@}\" --",
+    "preview": "vite preview",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --build",
+    "app:build": "npm run build && tsc && electron-builder --win --x64",
+    "ts:build": "tsc",
+    "electron": "electron .",
+    "app:dev": "npx tsc && cross-env NODE_ENV=development && npm-run-all2 --parallel ts:build dev electron",
+    "app:preview": "npm run build && tsc && electron ."
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^33.2.1",
+    "electron-devtools-installer": "^4.0.0",
+    "npm-run-all": "^4.1.5",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.10.2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "@vue/tsconfig": "^0.7.0",
+    "npm-run-all2": "^7.0.2",
+    "typescript": "~5.6.3",
+    "vite": "^6.0.5",
+    "vite-plugin-vue-devtools": "^7.6.8",
+    "vue-tsc": "^2.1.10"
+  },
+  "build": {
+    "asar": true,
+    "directories": {
+      "buildResources": "assets",
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist"
+    ],
+    "win": {
+      "target": "nsis",
+      "artifactName": "${productName}_${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}
